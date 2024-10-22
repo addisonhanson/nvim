@@ -11,7 +11,7 @@ map("n", "<leader>v", "v", { noremap = true, desc = "Visual word mode" })
 
 -- Basic operations
 map("n", "<leader>q", ":q<CR>", { desc = "Quit" })
-map("n", "<leader>h", ":nohl<CR>", { desc = "Clear search highlights" })
+map("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 
 -- Window navigation
 map("n", "<C-h>", "<C-w>h", { desc = "Navigate to left window" })
@@ -31,10 +31,17 @@ map("n", "<A-k>", ":m .-2<CR>==", { desc = "Move line up" })
 map("n", "<S-l>", ":bnext<CR>", { desc = "Next buffer" })
 map("n", "<S-h>", ":bprevious<CR>", { desc = "Previous buffer" })
 map("n", "<leader>x", ":bdelete<CR>", { desc = "Close buffer" })
+vim.api.nvim_create_user_command("Open", function(opts)
+	if opts.bang then
+		vim.cmd("enew | edit " .. opts.args)
+	else
+		vim.cmd("edit " .. opts.args)
+	end
+end, { nargs = 1, complete = 'file', bang = true })
 
 -- Window management
-map("n", "<leader>sv", ":vsplit<CR>", { desc = "Split vertically" })
-map("n", "<leader>sh", ":split<CR>", { desc = "Split horizontally" })
+map("n", "<leader>vs", ":vsplit<CR>", { desc = "Split vertically" })
+map("n", "<leader>hs", ":split<CR>", { desc = "Split horizontally" })
 map("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" })
 map("n", "<leader>sx", ":close<CR>", { desc = "Close current split" })
 
@@ -43,3 +50,12 @@ map("n", "<leader>to", ":tabnew<CR>", { desc = "Open new tab" })
 map("n", "<leader>tx", ":tabclose<CR>", { desc = "Close tab" })
 map("n", "<leader>tn", ":tabn<CR>", { desc = "Next tab" })
 map("n", "<leader>tp", ":tabp<CR>", { desc = "Previous tab" })
+
+local status_ok, comment = pcall(require, "Comment")
+
+-- Comments
+if (status_ok) then
+	map({"n", "v"}, "<C-_>", function()
+		require('Comment.api').toggle.linewise.current()
+	end)
+end

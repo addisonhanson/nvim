@@ -1,8 +1,13 @@
 return {
-    "folke/tokyonight.nvim",
-    lazy = false,    -- Load during startup
-    priority = 1000, -- Load this before other plugins
-    config = function()
-      vim.cmd([[colorscheme tokyonight]])
-    end,
+  'maxmx03/solarized.nvim',
+  lazy = false,
+  priority = 1000,
+  ---@type solarized.config
+  opts = {},
+  config = function(_, opts)
+    vim.o.termguicolors = true
+    vim.o.background = 'dark'
+    require('solarized').setup(opts)
+    vim.cmd.colorscheme 'solarized'
+  end,
 }

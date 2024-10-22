@@ -10,6 +10,7 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 vim.opt.rtp:prepend(lazypath)
+vim.opt.clipboard = 'unnamedplus'
 
 -- Load basic vim options
 require("config.options")
@@ -17,3 +18,4 @@ require("config.keymaps")
 
 -- Initialize lazy.nvim
 require("lazy").setup("plugins")
+
