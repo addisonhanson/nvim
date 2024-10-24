@@ -50,12 +50,3 @@ map("n", "<leader>to", ":tabnew<CR>", { desc = "Open new tab" })
 map("n", "<leader>tx", ":tabclose<CR>", { desc = "Close tab" })
 map("n", "<leader>tn", ":tabn<CR>", { desc = "Next tab" })
 map("n", "<leader>tp", ":tabp<CR>", { desc = "Previous tab" })
-
-local status_ok, comment = pcall(require, "Comment")
-
--- Comments
-if (status_ok) then
-	map({"n", "v"}, "<C-_>", function()
-		require('Comment.api').toggle.linewise.current()
-	end)
-end
