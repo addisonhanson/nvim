@@ -9,6 +9,26 @@ return {
     },
 	opts = {
 		defaults = {
+			sorting_strategy = "ascending",
+			layout_strategy = "horizontal",
+			layout_config = {
+				horizontal = {
+					prompt_position = "top",
+					preview_width = 0.60
+				},
+				vertical = {
+					prompt_position = "top",
+					preview_width = 0.60
+				},
+			},
+			file_ignore_patterns ={
+				"node_modules",
+				"dist",
+				"build",
+				".git"
+			},
+			width = 0.90,
+			height = 0.90,
 			mappings = {
 				i = {
                     ["<C-n>"] = false,

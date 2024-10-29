@@ -77,10 +77,14 @@ return {
 			on_attach = on_attach,
 			capabilities = capabilities,
 			settings = {
+				expose_as_code_action = "all",
 				tsserver_file_preferences = {
-					includeInlayParameterNameHints = "literals",
+					includeInlayParameterNameHints = "all",
 					includeInlayFunctionParameterTypeHints = true,
 					includeInlayVariableTypeHints = true,
+					includeCompletionsForModuleExports = true,
+					importModuleSpecifierPreference = "relative",
+					quotePreference = "single",
 					includeCompletionsForModuleExports = true,
 				},
 				separate_diagnostic_server = true,  -- Better performance
