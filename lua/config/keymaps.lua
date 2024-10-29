@@ -27,6 +27,10 @@ map("v", ">", ">gv", { desc = "Indent right and reselect" })
 map("n", "<A-j>", ":m .+1<CR>==", { desc = "Move line down" })
 map("n", "<A-k>", ":m .-2<CR>==", { desc = "Move line up" })
 
+-- Move Lines in Visual Mode
+map("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move block down" })
+map("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move block up" })
+
 -- Buffer navigation
 map("n", "<S-l>", ":bnext<CR>", { desc = "Next buffer" })
 map("n", "<S-h>", ":bprevious<CR>", { desc = "Previous buffer" })
