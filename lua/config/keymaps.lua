@@ -34,7 +34,8 @@ map("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move block up" })
 -- Buffer navigation
 map("n", "<S-l>", ":bnext<CR>", { desc = "Next buffer" })
 map("n", "<S-h>", ":bprevious<CR>", { desc = "Previous buffer" })
-map("n", "<leader>x", ":bdelete<CR>", { desc = "Close buffer" })
+map("n", "<leader>x", ":bfirst | bdelete #<CR>", { desc = "Close buffer and switch to previous" })
+
 vim.api.nvim_create_user_command("Open", function(opts)
 	if opts.bang then
 		vim.cmd("enew | edit " .. opts.args)
