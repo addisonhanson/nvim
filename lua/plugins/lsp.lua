@@ -45,20 +45,31 @@ return {
                 -- Enable completion triggered by <c-x><c-o>
                 vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
+
+
                 -- Mappings
                 local bufopts = { noremap=true, silent=true, buffer=bufnr }
-                vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-                vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-                vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-                vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-                vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-                vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-                vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-                vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-                vim.keymap.set('n', '<space>d', vim.lsp.buf.open_float, bufopts)
-                vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-                vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
-            end
+				local opts = function(desc)
+					return vim.tbl_extend("force", bufopts, {desc = desc})
+				end
+				vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts("Go to declaration"))
+				vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts("Go to definition"))
+				vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, opts("Go to type definition"))
+				vim.keymap.set('n', 'ge', vim.diagnostic.open_float, { noremap = true, silent = true, desc = "Show diagnostics" })
+				vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts("Find references"))
+				vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts("Show hover documentation"))
+				vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts("Go to implementation"))
+				vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts("Show signature help"))
+				vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts("Rename symbol"))
+				vim.keymap.set('n', '<leader>ca', function()
+				   vim.lsp.buf.code_action({
+					   border = "rounded",
+					   style = "minimal",
+					   relative = "cursor",
+					   focusable = true
+				   })
+				end, opts("Code actions"))
+			end
 
             -- Setup each LSP server
             local servers = {
@@ -77,23 +88,23 @@ return {
 
             -- Diagnostic settings
             vim.diagnostic.config({
-				float = {
-					border = "rounded",
-					source = "always",
-				},
-                virtual_text = true,
+                virtual_text = false,
                 signs = true,
                 underline = true,
                 update_in_insert = false,
-                severity_sort = false,
+                severity_sort = true,
+				float = {
+					border = "rounded",
+					source = "always",
+					header = "",
+					prefix = "",
+					style = "minimal",
+					focusable = true,
+				}
             })
 
-            -- Diagnostic signs
-            local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-            for type, icon in pairs(signs) do
-                local hl = "DiagnosticSign" .. type
-                vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-            end
+			vim.o.updatetime = 250
+			vim.o.signcolumn = "yes" -- Reserve space for diagnostic signs
         end
     },
     {
@@ -142,12 +153,16 @@ return {
                         end
                     end, { 'i', 's' }),
                 }),
-                sources = {
-                    { name = 'nvim_lsp' },
-                    { name = 'luasnip' },
-                    { name = 'buffer' },
-                    { name = 'path' },
-                },
+				sources = cmp.config.sources({
+					{ name = 'nvim_lsp', priority = 1000 },
+					{ name = 'luasnip', priority = 750 },
+					{ name = 'buffer', priority = 500 },
+					{ name = 'path', priority = 250 },
+				}),
+				completion = {
+					completeopt = 'menu,menuone,noinsert'
+				},
+				max_item_count = 10
             })
         end
     }

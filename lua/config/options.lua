@@ -8,3 +8,4 @@ opt.wrap = false          -- Disable line wrap
 opt.ignorecase = true     -- Ignore case in search
 opt.smartcase = true      -- Don't ignore case with capitals
 opt.termguicolors = true  -- True color support
+opt.cursorline = true

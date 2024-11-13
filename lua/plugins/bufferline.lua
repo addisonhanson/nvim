@@ -28,7 +28,6 @@ return {
 		  show_buffer_icons = true,
 		  close_icon = '\u{F0049}',
 		  show_close_icon = true,
-		  close_command = "bdelete! %d",
 	      right_mouse_command = "bdelete! %d",
 		  left_mouse_command = "buffer %d", 
 		  middle_mouse_command = nil,      

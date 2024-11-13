@@ -1,12 +1,42 @@
 return {
     "nvim-telescope/telescope.nvim",
     dependencies = { 
-      "nvim-lua/plenary.nvim"
+      "nvim-lua/plenary.nvim",
+		{
+			'nvim-telescope/telescope-fzf-native.nvim',
+			build = 'make'
+		}
     },
     keys = {
       { "<C-p>", "<cmd>Telescope find_files<cr>", desc = "Find Files" },
       { "<C-f>", "<cmd>Telescope live_grep<cr>", desc = "Live Grep" },
+	  { "<leader>fs", "<cmd>Telescope git_status<cr>", desc = "Git Status" },
+	  { "<leader>vs", "<cmd>vsplit ", desc = "remapped vsplit, can type" },
+	  { "<leader>vsb", "<cmd>vsplit | Telescope buffers<cr>", desc = "Select open buffer for vsplit" },
+	  { "<leader>hsb", "<cmd>split | Telescope buffers<cr>", desc = "Select open buffer for split" },
+	  { "<leader>vsf", "<cmd>vsplit | Telescope find_files<cr>", desc = "Select file for vsplit" },
+	  { "<leader>hsf", "<cmd>split | Telescope find_files<cr>", desc = "Select file for split" },
+
     },
+    config = function(_, opts)
+        local telescope = require('telescope')
+        
+        -- Merge default opts with fzf extension settings
+        opts.extensions = {
+            fzf = {
+                fuzzy = true,
+                override_generic_sorter = true,
+                override_file_sorter = true,
+                case_mode = "smart_case",
+            }
+        }
+        
+        -- Setup telescope with merged opts
+        telescope.setup(opts)
+        
+        -- Load fzf extension
+        telescope.load_extension('fzf')
+    end,
 	opts = {
 		defaults = {
 			sorting_strategy = "ascending",

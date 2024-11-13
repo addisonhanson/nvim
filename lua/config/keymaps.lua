@@ -44,9 +44,6 @@ vim.api.nvim_create_user_command("Open", function(opts)
 	end
 end, { nargs = 1, complete = 'file', bang = true })
 
--- Window management
-map("n", "<leader>vs", ":vsplit<CR>", { desc = "Split vertically" })
-map("n", "<leader>hs", ":split<CR>", { desc = "Split horizontally" })
 map("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" })
 map("n", "<leader>sx", ":close<CR>", { desc = "Close current split" })
 
