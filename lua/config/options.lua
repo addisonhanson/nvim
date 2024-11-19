@@ -9,3 +9,5 @@ opt.ignorecase = true     -- Ignore case in search
 opt.smartcase = true      -- Don't ignore case with capitals
 opt.termguicolors = true  -- True color support
 opt.cursorline = true
+
+vim.env.NVIM_TUI_ENABLE_TRUE_COLOR = 1

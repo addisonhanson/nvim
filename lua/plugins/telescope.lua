@@ -14,8 +14,8 @@ return {
 	  { "<leader>vs", "<cmd>vsplit ", desc = "remapped vsplit, can type" },
 	  { "<leader>vsb", "<cmd>vsplit | Telescope buffers<cr>", desc = "Select open buffer for vsplit" },
 	  { "<leader>hsb", "<cmd>split | Telescope buffers<cr>", desc = "Select open buffer for split" },
-	  { "<leader>vsf", "<cmd>vsplit | Telescope find_files<cr>", desc = "Select file for vsplit" },
-	  { "<leader>hsf", "<cmd>split | Telescope find_files<cr>", desc = "Select file for split" },
+	  { "<leader>vs", "<cmd>vsplit | Telescope find_files<cr>", desc = "Select file for vsplit" },
+	  { "<leader>hs", "<cmd>split | Telescope find_files<cr>", desc = "Select file for split" },
 
     },
     config = function(_, opts)

@@ -8,6 +8,9 @@ return {
 		git = {
 			enable = false
 		},
+		update_focused_file = {
+			enable = true,
+		},
 		renderer = {
 			icons = {
 				show = {
